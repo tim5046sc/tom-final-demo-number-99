@@ -7,6 +7,30 @@ import {
   useSitecoreContext,
 } from '@sitecore-jss/sitecore-jss-nextjs';
 
+import FEAAS from '@sitecore-feaas/sdk@latest';
+
+const MyComponent = ({data}) =>
+  <>
+  <script
+  src="https://feaascomponentsapiqa.blob.core.windows.net/sdk/latest/webcomponent.min.js">
+</script>
+
+<feaas-component
+  component-id='HKlcd1ptS1'
+  variant-id='longest-ref2'
+  version='published'
+  hostname='https://feaascomponentsapiqa.blob.core.windows.net'
+  data='{}'>
+</feaas-component>
+
+<feaas-stylesheet
+  hostname='https://feaascomponentsapiqa.blob.core.windows.net'
+  library-id='demo-site1'>
+</feaas-stylesheet>
+
+  </>
+
+
 interface Fields {
   Id: string;
   DisplayName: string;
@@ -94,6 +118,7 @@ export const Default = (props: NavigationProps): JSX.Element => {
           onChange={() => handleToggleMenu()}
         />
         <div>Hello world!!!</div>
+        <MyComponent />
         <div className="menu-humburger" />
         <div className="component-content">
           <nav>
