@@ -15,7 +15,7 @@ const MyWebComponent = ({ data = {} }: { data?: FEAAS.Datascopes }) => (
     <feaas-component
       component-id="HKlcd1ptS1"
       variant-id="longest-ref2"
-      version="saved"
+      version="published"
       hostname="https://feaascomponentsapiqa.blob.core.windows.net"
       data={JSON.stringify(data)}
     ></feaas-component>
@@ -35,7 +35,7 @@ const MyReactComponent = ({ data = {} }: { data?: FEAAS.Datascopes }) => (
     <FEAAS.Component
       componentId="HKlcd1ptS1"
       variantId="longest-ref2"
-      version="saved"
+      version="published"
       hostname="https://feaascomponentsapiqa.blob.core.windows.net"
       data={data}
     ></FEAAS.Component>
