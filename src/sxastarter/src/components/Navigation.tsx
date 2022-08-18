@@ -7,28 +7,47 @@ import {
   useSitecoreContext,
 } from '@sitecore-jss/sitecore-jss-nextjs';
 
-import FEAAS from '@sitecore-feaas/sdk@latest';
+// for older projects that dont have `"type": "module"` in their package.json
+// we have to use this backward-compatible but ugly path for react
+import * as FEAAS from '@sitecore-feaas/sdk/react';
+import dynamic from 'next/dynamic';
 
-const MyComponent = ({data}) =>
+const MyWebComponent = ({ data = {} }: { data?: FEAAS.Datascopes }) => (
   <>
-  <script
-  src="https://feaascomponentsapiqa.blob.core.windows.net/sdk/latest/webcomponent.min.js">
-</script>
+    <feaas-component
+      component-id="HKlcd1ptS1"
+      variant-id="longest-ref2"
+      version="saved"
+      hostname="https://feaascomponentsapiqa.blob.core.windows.net"
+      data={JSON.stringify(data)}
+    ></feaas-component>
 
-<feaas-component
-  component-id='HKlcd1ptS1'
-  variant-id='longest-ref2'
-  version='published'
-  hostname='https://feaascomponentsapiqa.blob.core.windows.net'
-  data='{}'>
-</feaas-component>
-
-<feaas-stylesheet
-  hostname='https://feaascomponentsapiqa.blob.core.windows.net'
-  library-id='demo-site1'>
-</feaas-stylesheet>
-
+    <feaas-stylesheet
+      hostname="https://feaascomponentsapiqa.blob.core.windows.net"
+      library-id="demo-site1"
+    ></feaas-stylesheet>
   </>
+);
+// Dont try to render component on server in next.js. It complains otherwise.
+// I'll see if we can actually support rendering web components on backend later.
+const MyWebComponentNoSSR = dynamic(() => Promise.resolve(MyWebComponent), { ssr: false });
+
+const MyReactComponent = ({ data = {} }: { data?: FEAAS.Datascopes }) => (
+  <>
+    <FEAAS.Component
+      componentId="HKlcd1ptS1"
+      variantId="longest-ref2"
+      version="saved"
+      hostname="https://feaascomponentsapiqa.blob.core.windows.net"
+      data={data}
+    ></FEAAS.Component>
+
+    <FEAAS.Stylesheet
+      hostname="https://feaascomponentsapiqa.blob.core.windows.net"
+      libraryId="demo-site1"
+    ></FEAAS.Stylesheet>
+  </>
+);
 
 
 interface Fields {
@@ -118,7 +137,8 @@ export const Default = (props: NavigationProps): JSX.Element => {
           onChange={() => handleToggleMenu()}
         />
         <div>Hello world!!!</div>
-        <MyComponent />
+        <MyWebComponentNoSSR />
+        <MyReactComponent />
         <div className="menu-humburger" />
         <div className="component-content">
           <nav>
