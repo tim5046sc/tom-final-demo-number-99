@@ -7,8 +7,6 @@ import {
   useSitecoreContext,
 } from '@sitecore-jss/sitecore-jss-nextjs';
 
-// for older projects that dont have `"type": "module"` in their package.json
-// we have to use this backward-compatible but ugly path for react
 import * as FEAAS from '@sitecore-feaas/sdk/react';
 import dynamic from 'next/dynamic';
 
