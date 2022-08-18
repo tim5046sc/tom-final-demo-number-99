@@ -4,7 +4,7 @@ const file = fs.readFileSync(__dirname + '/my_custom_component.js')
 
 export default async function Example() {
   const api = new API({
-    hostname: 'http://localhost:3030',
+    hostname: 'http://components-api-qa.sitecore-staging.cloud',
     apiKey: 'my-api-key',
     verbose: true
   })
