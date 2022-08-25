@@ -8,27 +8,27 @@ import {
 } from '@sitecore-jss/sitecore-jss-nextjs';
 
 import * as FEAAS from '@sitecore-feaas/sdk/react';
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 
-const MyWebComponent = ({ data = {} }: { data?: FEAAS.Datascopes }) => (
-  <>
-    <feaas-component
-      component-id="HKlcd1ptS1"
-      variant-id="longest-ref2"
-      version="published"
-      hostname="https://feaascomponentsapiqa.blob.core.windows.net"
-      data={JSON.stringify(data)}
-    ></feaas-component>
+// const MyWebComponent = ({ data = {} }: { data?: FEAAS.Datascopes }) => (
+//   <>
+//     <feaas-component
+//       component-id="HKlcd1ptS1"
+//       variant-id="longest-ref2"
+//       version="published"
+//       hostname="https://feaascomponentsapiqa.blob.core.windows.net"
+//       data={JSON.stringify(data)}
+//     ></feaas-component>
 
-    <feaas-stylesheet
-      hostname="https://feaascomponentsapiqa.blob.core.windows.net"
-      library-id="demo-site1"
-    ></feaas-stylesheet>
-  </>
-);
+//     <feaas-stylesheet
+//       hostname="https://feaascomponentsapiqa.blob.core.windows.net"
+//       library-id="demo-site1"
+//     ></feaas-stylesheet>
+//   </>
+// );
 // Dont try to render component on server in next.js. It complains otherwise.
 // I'll see if we can actually support rendering web components on backend later.
-const MyWebComponentNoSSR = dynamic(() => Promise.resolve(MyWebComponent), { ssr: false });
+// const MyWebComponentNoSSR = dynamic(() => Promise.resolve(MyWebComponent), { ssr: false });
 
 const MyReactComponent = ({ data = {} }: { data?: FEAAS.Datascopes }) => (
   <>
@@ -39,6 +39,12 @@ const MyReactComponent = ({ data = {} }: { data?: FEAAS.Datascopes }) => (
       hostname="https://feaascomponentsapiqa.blob.core.windows.net"
       data={data}
     ></FEAAS.Component>
+  <FEAAS.Component
+    variantId="Qix2FEatdv"
+    componentId="2-R8oI0AE-"
+    version="published"
+    hostname="https://feaascomponentsapiqa.blob.core.windows.net"
+     />
 
     <FEAAS.Stylesheet
       hostname="https://feaascomponentsapiqa.blob.core.windows.net"
@@ -134,8 +140,8 @@ export const Default = (props: NavigationProps): JSX.Element => {
           checked={isOpenMenu}
           onChange={() => handleToggleMenu()}
         />
+        <div>This is a code change</div>
         <div>Hello world!!!</div>
-        <MyWebComponentNoSSR />
         <MyReactComponent />
         <div className="menu-humburger" />
         <div className="component-content">
