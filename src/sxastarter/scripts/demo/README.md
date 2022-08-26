@@ -1,3 +1,5 @@
+> npx ts-node --project=tsconfig.scripts.json scripts/demo/0-clone-lib.ts   
+
 # 1. Embedding article list
 Using Article list
 
