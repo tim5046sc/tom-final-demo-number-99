@@ -34,7 +34,6 @@ const Layout = ({ layoutData }: LayoutProps): JSX.Element => {
     <>
       <Head>
         <title>{fields?.Title?.value?.toString() || 'Page'}</title>
-        <script type="module" src="https://cdn.skypack.dev/@sitecore-feaas/sdk"></script>
         <link rel="icon" href={`${publicUrl}/favicon.ico`} />
       </Head>
 
