@@ -153,25 +153,25 @@ Using: Product list
 ### 4.2 
 - Go to page source
 - Paste following code:
-    ```ts:
-    const AnimatedCards = ({ children }: { children: unknown }) => {
+```ts:
+    
+const AnimatedCards = ({ children }: { children: unknown }) => {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        var options = {
-        rootMargin: '30px',
-        threshold: 1,
-        };
         var observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             var target = entry.target;
-            if (entry.intersectionRatio >= 0.25) {
+            if (entry.intersectionRatio >= 0.5) {
             target.classList.add('visible');
             } else {
             target.classList.remove('visible');
             }
         });
-        }, options);
+        }, {
+            rootMargin: '100px',
+            threshold: .7
+            });
         function observe() {
             var sections = ref.current?.querySelectorAll('[class*="-card"][data-path-scope]');
             Array.prototype.forEach.call(sections, (section) => {
@@ -190,7 +190,7 @@ Using: Product list
     
     const cssText = `
     .animated-cards  [class*="-card"][data-path-scope]:not(.visible) {
-        transition: transform 0.45s, opacity .6s;
+        transition: transform 0.15s, opacity .1s;
         transform: translateY(50px);
         opacity: 0;
     }
@@ -202,16 +202,17 @@ Using: Product list
         <style>{cssText}</style>    
         {children}
     </div>;
-    };
-    ```
+    }
+```
 (CONTD.)
 - Wrap MyComponent4 into <AnimatedCards> lile this:
-    ```jsx:
+```jsx:
     <AnimatedCards>
         <MyComponent4 ... />
     </AnimatedCards>
-    ```
+```
 - Refresh page - it shows animation on scroll
+
 ### 4.3 Edit component
 - Go to Product List component in Editor
 - Click on paragraph containing price
@@ -225,23 +226,62 @@ Using: Product list
 
 
 
-### Carousel with buttons
-    Using: Brand carousel
+# 5. Carousel with buttons
+Using: Brand carousel
 
-    Narrative:
-        - External components can code can be embedded into editor via web components
-        - Styled content can be dropped into the component
-        - Component can route different types of content based on slot
-        - Code works directly in editor
-        - Content is still stylable
+## Narrative:
+- Can create/embed coded components without using builder at all
+- External components  code can be embedded into editor via web components
+- Styled content can be dropped into the component
+- Component can route different types of content based on slot (buttons vs slides in the example)
+- Code works directly in editor
+- Content is still stylable/editable/repeatable
 
-    1) Updating button style
-    2) cmd+click card, updating card style to "Gray gradient"
-    
-    Demonstrates:
-        - Support for external web components
-        - Putting styled content into a web component
-        - Slots feature to customize elements separately from buttons
+Demonstrates:
+- Support for external web components
+- Using styled content into a web component
+- Slots feature to customize elements separately from buttons
+- Embedding without "Embed dialog", directly with code
 
-    TODO: Button slot (via publishing)
-    TODO: Fix data-attributes
+
+## Create component
+- Run script
+    > npx ts-node --project=tsconfig.scripts.json scripts/demo/1-update-product-promo.ts
+    - It creates component variant that uses web component side, embeds javascript. 
+    - Uses `slot` attribute for buttons so component understands
+    - Passes settings as custom attributes
+    - Uses custom element to initialize web component
+    - Linked script will power it up
+
+- Put it on the page:
+    IMPORTANT: Change suffix `-yf5` in variantId, componentId and data
+
+      <FEAAS.Component
+        variantId="brand-carousel-yf5"
+        componentId="_vWlie5YY1-yf5"
+        version="published"
+        hostname="https://feaascomponentsapiqa.blob.core.windows.net"
+        data={{'brandslist-yf5': [{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/BAKER.png","Brand_title":"Baker","Brand_link-href":"https://www.skatewarehouse.com/Baker/catpage-BAKER.html"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/INDEPENDENT.png","Brand_title":"Independent","Brand_link-href":"https://www.skatewarehouse.com/Independent/catpage-INDEPENDENT.html"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/NIKE.png","Brand_title":"Nike SB","Brand_link-href":"https://www.skatewarehouse.com/Nike_SB/catpage-NIKE.html"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/SPITFIRE.png","Brand_title":"Spitfire","Brand_link-href":"https://www.skatewarehouse.com/Spitfire/catpage-SPITFIRE.html"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/SANTACRUZ.png","Brand_title":"Santa Cruz","Brand_link-href":"https://www.skatewarehouse.com/Santa_Cruz/catpage-SANTACRUZ.html"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/PRIMITIVE.png","Brand_title":"Primitive","Brand_link-href":"https://www.skatewarehouse.com/Primitive/catpage-PRIMITIVE.html"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/VANS.png","Brand_title":"Vans","Brand_link-href":"https://www.skatewarehouse.com/Vans/catpage-VANS.html"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/DICKIES67.png","Brand_title":"Dickies","Brand_link-href":"https://www.skatewarehouse.com"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/TOYMACHINE.png","Brand_title":"Toy Machine","Brand_link-href":"https://www.skatewarehouse.com"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/THRASHER.png","Brand_title":"Trasher","Brand_link-href":"https://www.skatewarehouse.com"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/GIRL.png","Brand_title":"Girls","Brand_link-href":"https://www.skatewarehouse.com"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/ADIDAS.png","Brand_title":"Adidas","Brand_link-href":"https://www.skatewarehouse.com"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/ANTIHERO.png","Brand_title":"Anti Hero","Brand_link-href":"https://www.skatewarehouse.com"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/ENJOI.png","Brand_title":"Enjoi","Brand_link-href":"https://www.skatewarehouse.com"},{"Brand_image-src":"https://img.skatewarehouse.com/fpcache/70/icons_logos/BONES.png","Brand_title":"Bones Wheels","Brand_link-href":"https://www.skatewarehouse.com"}]}}
+      />
+
+    - Buttons will be clickable
+    - Slider will be draggable
+
+## 5.2 Update component
+
+- Go to Brand carousel component in editor
+- Cmd+click double click left button
+- Change text to "Previous"
+- Click "Button" pill to choose style - choose other style 
+- +Cmd+click double click on right button
+- Change text to "Next"
+- Click "Button" pill to choose style - choose other style 
+- Cmd click on component listing
+- Click "Button" pill to choose style - choose "Gray gradient"
+- Stage & Publish
+- Go to page
+- Update page
+- CURRENTLY WILL NOT CORRECTLY SHOW UPDATES, TBD MONDAY
+
+
+TODO: Fix data-attributes
