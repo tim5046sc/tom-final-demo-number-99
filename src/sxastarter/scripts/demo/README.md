@@ -246,7 +246,7 @@ Demonstrates:
 
 ## Create component
 - Run script
-    > npx ts-node --project=tsconfig.scripts.json scripts/demo/1-update-product-promo.ts
+    > npx ts-node --project=tsconfig.scripts.json scripts/demo/2-add-carousel.ts
     - It creates component variant that uses web component side, embeds javascript. 
     - Uses `slot` attribute for buttons so component understands
     - Passes settings as custom attributes
