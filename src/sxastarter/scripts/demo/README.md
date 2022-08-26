@@ -19,7 +19,7 @@ Using Article list
 ### 1.1 Embed to page
 - Copy paste code from Embed dialog (not codepen)
 - Paste into top level of a file
-- Take out JSX and put it into the page
+- Take out JSX and put it into the pag
 
 ### 1.2 Map image to link
 - Click on the image
@@ -136,13 +136,93 @@ Using: Text banner
     }}
 ```
 
-###. Product list
-    Using: Product list
+##4. Product list
+Using: Product list
 
-    Narrative: 
-        - Components can be controlled by external JS and CSS to provide animations
+### Narrative: 
+- Components can be controlled by external JS and CSS to provide animations
+- Component can be edited and manipulated in editor later
+- Easy to reconfigure components
 
-    TODO: Find decent animation
+### 4.1 Embed the component
+- Go to Product list component
+- Copy embed code
+- Paste it to the page
+- Rename to MyComponent4
+- Put it on the page - it's static.
+### 4.2 
+- Go to page source
+- Paste following code:
+    ```ts:
+    const AnimatedCards = ({ children }: { children: unknown }) => {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        var options = {
+        rootMargin: '30px',
+        threshold: 1,
+        };
+        var observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            var target = entry.target;
+            if (entry.intersectionRatio >= 0.25) {
+            target.classList.add('visible');
+            } else {
+            target.classList.remove('visible');
+            }
+        });
+        }, options);
+        function observe() {
+            var sections = ref.current?.querySelectorAll('[class*="-card"][data-path-scope]');
+            Array.prototype.forEach.call(sections, (section) => {
+                observer.observe(section);
+            });
+        }
+        const mutations = new MutationObserver(observe);
+        observe();
+        if (ref.current)
+            mutations.observe(ref.current, {subtree: true, childList: true});
+        return () => {
+            observer.disconnect()
+            mutations.disconnect();
+        }
+    }, [ref.current]);
+    
+    const cssText = `
+    .animated-cards  [class*="-card"][data-path-scope]:not(.visible) {
+        transition: transform 0.45s, opacity .6s;
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    .animated-cards [class*="-card"] {
+        transition: transform 0.95s, opacity 1.6s;
+    }    
+    `
+    return <div ref={ref} className='animated-cards'>
+        <style>{cssText}</style>    
+        {children}
+    </div>;
+    };
+    ```
+(CONTD.)
+- Wrap MyComponent4 into <AnimatedCards> lile this:
+    ```jsx:
+    <AnimatedCards>
+        <MyComponent4 ... />
+    </AnimatedCards>
+    ```
+- Refresh page - it shows animation on scroll
+### 4.3 Edit component
+- Go to Product List component in Editor
+- Click on paragraph containing price
+- Delete it
+- Click on the button 
+- Choose "Add element" -> "Variable"
+- It will display configuring dialog for variable (or click variable to open it)
+- Go to Text, choose "Complete skateboards", choose "Product_Price" field
+- Publish component
+- Update page - it shows animation with new updated component
+
 
 
 ### Carousel with buttons
